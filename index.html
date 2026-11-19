@@ -53,6 +53,16 @@ footer{margin:22px 0 8px;color:var(--mute);font-size:13px;text-align:center}
 .plact{display:flex;flex-wrap:wrap;gap:8px;padding:12px}
 .plact button,.plact .btn{flex:1;text-align:center}
 .plhint{padding:0 12px 12px;font-size:12px;opacity:.7;text-align:center}
+.plbar b{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#pl.full .plbar{position:absolute;top:env(safe-area-inset-top,0px);left:env(safe-area-inset-left,0px);z-index:2;padding:6px;pointer-events:none}
+#pl.full #plt,#pl.full #plx,#pl.full .plact,#pl.full .plhint{display:none}
+#pl.full #plfs{pointer-events:auto;opacity:.65;min-height:38px}
+#pl.full .plv{position:absolute;inset:0;overflow:hidden}
+#pl.full .plv iframe{width:100%;height:100%;aspect-ratio:auto;max-height:none}
+@media (orientation:portrait){
+#pl.full .plbar{left:auto;right:env(safe-area-inset-right,0px)}
+#pl.full .plv iframe{position:absolute;top:50%;left:50%;width:100vh;height:100vw;width:100dvh;height:100dvw;transform:translate(-50%,-50%) rotate(90deg)}
+}
 .tools label{display:flex;gap:6px;align-items:center}
 @media (max-width:600px){
 .wrap{padding:10px 10px 90px}
@@ -99,7 +109,7 @@ footer{margin:22px 0 8px;color:var(--mute);font-size:13px;text-align:center}
   <footer>Tiến độ được lưu ngay trên trình duyệt này. Link Google Drive đã được gắn sẵn cho từng tập; bấm 🔗 nếu muốn thay link khác.</footer>
 </div>
 <a class="btn dock" id="dock" target="_blank" rel="noopener"></a>
-<div id="pl" hidden><div class="plbar"><button id="plx" aria-label="Đóng">✕</button><b id="plt"></b></div><div class="plv"><iframe id="plf" allow="autoplay; fullscreen" allowfullscreen referrerpolicy="no-referrer" title="Trình xem"></iframe></div><div class="plact"><button id="plp">◀ Trước</button><button id="plw"></button><button id="pln">Sau ▶</button><a id="plo" class="btn" target="_blank" rel="noopener">Mở Drive ↗</a></div><div class="plhint">Không phát được? Bấm “Mở Drive ↗” để xem trên Google Drive.</div></div>
+<div id="pl" hidden><div class="plbar"><button id="plx" aria-label="Đóng">✕</button><b id="plt"></b><button id="plfs" aria-label="Toàn màn hình">⛶</button></div><div class="plv"><iframe id="plf" allow="autoplay; fullscreen" allowfullscreen referrerpolicy="no-referrer" title="Trình xem"></iframe></div><div class="plact"><button id="plp">◀ Trước</button><button id="plw"></button><button id="pln">Sau ▶</button><a id="plo" class="btn" target="_blank" rel="noopener">Mở Drive ↗</a></div><div class="plhint">Không phát được? Bấm “Mở Drive ↗” để xem trên Google Drive.</div></div>
 <script>
 const rng=(a,b)=>Array.from({length:b-a+1},(_,i)=>a+i);
 const S=[
@@ -135,12 +145,20 @@ function openPlayer(sid,e){
   $('plw').textContent=done(sid,e)?'✓ Đã xem':'Đánh dấu đã xem';
   $('pl').hidden=false;document.body.style.overflow='hidden';
 }
-function closePlayer(){$('pl').hidden=true;$('plf').src='about:blank';document.body.style.overflow='';pc=null;render()}
+function closePlayer(){setFull(false);$('pl').hidden=true;$('plf').src='about:blank';document.body.style.overflow='';pc=null;render()}
 function stepPlayer(d){const f=flat();let i=f.findIndex(x=>x[0]===pc[0]&&x[1]===pc[1]);
   for(i+=d;i>=0&&i<f.length;i+=d){if(embedUrl(linkOf(f[i][0],f[i][1]))){cur=f[i][0];openPlayer(f[i][0],f[i][1]);return}}}
+function setFull(on){
+  $('pl').classList.toggle('full',on);
+  const d=document;
+  if(on){const el=$('pl'),r=el.requestFullscreen||el.webkitRequestFullscreen;if(r){try{const p=r.call(el);if(p&&p.catch)p.catch(()=>{})}catch(e){}}}
+  else{const x=d.exitFullscreen||d.webkitExitFullscreen;if((d.fullscreenElement||d.webkitFullscreenElement)&&x)x.call(d)}
+}
+$('plfs').onclick=()=>setFull(!$('pl').classList.contains('full'));
+['fullscreenchange','webkitfullscreenchange'].forEach(t=>document.addEventListener(t,()=>{if(!(document.fullscreenElement||document.webkitFullscreenElement))$('pl').classList.remove('full')}));
 $('plx').onclick=closePlayer;$('plp').onclick=()=>stepPlayer(-1);$('pln').onclick=()=>stepPlayer(1);
 $('plw').onclick=()=>{const x=k(pc[0],pc[1]);if(st.w[x])delete st.w[x];else st.w[x]=1;save();$('plw').textContent=st.w[x]?'✓ Đã xem':'Đánh dấu đã xem'};
-document.addEventListener('keydown',ev=>{if(ev.key==='Escape'&&pc)closePlayer()});
+document.addEventListener('keydown',ev=>{if(ev.key==='Escape'&&pc){if($('pl').classList.contains('full'))setFull(false);else closePlayer()}});
 function render(){
   const tot=S.reduce((a,s)=>a+s.eps.length,0),dn=S.reduce((a,s)=>a+cnt(s),0);
   $('gbar').style.width=(tot?dn/tot*100:0)+'%';
