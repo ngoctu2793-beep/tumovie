@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Suite Life of Zack &amp; Cody</title>
+<style>
+:root{--bg:#f6f4ef;--card:#fff;--ink:#1d1b22;--mute:#6b6874;--line:#e2dfd7;--acc:#d6336c;--ok:#1f9d63;--okbg:#e4f5ec;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121018;--card:#1c1926;--ink:#f1eef7;--mute:#9a96a6;--line:#2c2839;--acc:#ff5c9a;--ok:#46d391;--okbg:#14291f}}
+:root[data-theme="dark"]{--bg:#121018;--card:#1c1926;--ink:#f1eef7;--mute:#9a96a6;--line:#2c2839;--acc:#ff5c9a;--ok:#46d391;--okbg:#14291f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1000px;margin:0 auto;padding:16px}
+.hero{border-radius:18px;padding:26px 22px;background:linear-gradient(135deg,#2b1055,#d6336c 70%,#ff9a5c);color:#fff}
+.hero h1{margin:0 0 4px;font-size:clamp(22px,5vw,34px);letter-spacing:-.5px}
+.hero p{margin:0 0 16px;opacity:.9}
+.bar{height:10px;border-radius:9px;background:rgba(255,255,255,.28);overflow:hidden}
+.bar i{display:block;height:100%;background:#fff;border-radius:9px;transition:width .3s}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:10px}
+button,.btn{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:7px 12px;text-decoration:none;display:inline-block}
+button:hover,.btn:hover{border-color:var(--acc)}
+.primary{background:#fff;color:#2b1055;border:0;font-weight:700;padding:9px 16px}
+.tabs{display:flex;gap:8px;overflow-x:auto;margin:18px 0 10px;padding-bottom:4px}
+.tab{white-space:nowrap}
+.tab.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.tab small{opacity:.8;margin-left:6px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.tools .sp{flex:1}
+.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.ep{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.ep.done{background:var(--okbg);border-color:var(--ok)}
+.ep .top{display:flex;justify-content:space-between;align-items:center}
+.num{font-size:26px;font-weight:800;letter-spacing:-1px}
+.st{font-size:12px;color:var(--mute)}
+.done .st{color:var(--ok);font-weight:700}
+.acts{display:flex;flex-wrap:wrap;gap:6px}
+.acts button,.acts .btn{font-size:13px;padding:5px 9px}
+.watch{background:var(--acc);border-color:var(--acc);color:#fff}
+.ed{display:flex;gap:6px}
+.ed input{flex:1;min-width:0;padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
+.empty{color:var(--mute);padding:30px;text-align:center}
+footer{margin:22px 0 8px;color:var(--mute);font-size:13px;text-align:center}
+.dock{display:none}
+#pl{position:fixed;inset:0;z-index:50;background:#000;color:#fff;display:flex;flex-direction:column;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+#pl[hidden]{display:none}
+.plbar{display:flex;align-items:center;gap:10px;padding:10px 12px}
+.plbar button,.plact button,.plact .btn{background:#222;color:#fff;border-color:#444;min-height:46px}
+.plv{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
+.plv iframe{width:100%;aspect-ratio:16/9;max-height:100%;border:0;background:#000}
+.plact{display:flex;flex-wrap:wrap;gap:8px;padding:12px}
+.plact button,.plact .btn{flex:1;text-align:center}
+.plhint{padding:0 12px 12px;font-size:12px;opacity:.7;text-align:center}
+.tools label{display:flex;gap:6px;align-items:center}
+@media (max-width:600px){
+.wrap{padding:10px 10px 90px}
+.hero{padding:18px 16px;border-radius:14px}
+.primary{display:block;width:100%;text-align:center}
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);margin:10px -10px;padding:8px 10px}
+.tab{padding:10px 14px}
+.tools button,.tools .chip{padding:9px 12px}
+.grid{grid-template-columns:1fr;gap:8px}
+.ep{display:grid;grid-template-columns:64px 1fr;align-items:center;gap:6px 10px;padding:10px}
+.ep .top{flex-direction:column;align-items:flex-start}
+.acts{gap:6px}
+.acts button,.acts .btn{min-height:44px;font-size:14px;padding:8px 12px;flex:1}
+.acts .watch,.acts>.st{flex:1 1 100%;order:-1;text-align:center}
+.acts .watch{font-weight:700;font-size:16px}
+.ed{grid-column:1/-1}
+.dock{display:block;position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:10;background:var(--acc);border-color:var(--acc);color:#fff;text-align:center;font-weight:700;padding:14px;border-radius:14px;box-shadow:0 6px 20px rgba(0,0,0,.3)}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <h1>🎬 The Suite Life of Zack &amp; Cody</h1>
+    <p>Theo dõi tập phim · Mùa 1–3 &amp; On Deck</p>
+    <div class="bar"><i id="gbar"></i></div>
+    <div class="row">
+      <span id="gtxt"></span>
+      <a class="btn primary" id="cont" target="_blank" rel="noopener"></a>
+    </div>
+  </div>
+  <div class="tabs" id="tabs"></div>
+  <div class="tools">
+    <button class="chip" data-f="all">Tất cả</button>
+    <button class="chip" data-f="todo">Chưa xem</button>
+    <button class="chip" data-f="done">Đã xem</button>
+    <span class="sp"></span>
+    <span class="st" id="stxt"></span>
+    <label class="st"><input type="checkbox" id="auto"> Tự đánh dấu đã xem khi bấm ▶</label>
+    <button id="allbtn"></button>
+    <button id="reset">Xoá tiến độ</button>
+  </div>
+  <div class="grid" id="grid"></div>
+  <footer>Tiến độ được lưu ngay trên trình duyệt này. Link Google Drive đã được gắn sẵn cho từng tập; bấm 🔗 nếu muốn thay link khác.</footer>
+</div>
+<a class="btn dock" id="dock" target="_blank" rel="noopener"></a>
+<div id="pl" hidden><div class="plbar"><button id="plx" aria-label="Đóng">✕</button><b id="plt"></b></div><div class="plv"><iframe id="plf" allow="autoplay; fullscreen" allowfullscreen referrerpolicy="no-referrer" title="Trình xem"></iframe></div><div class="plact"><button id="plp">◀ Trước</button><button id="plw"></button><button id="pln">Sau ▶</button><a id="plo" class="btn" target="_blank" rel="noopener">Mở Drive ↗</a></div><div class="plhint">Không phát được? Bấm “Mở Drive ↗” để xem trên Google Drive.</div></div>
+<script>
+const rng=(a,b)=>Array.from({length:b-a+1},(_,i)=>a+i);
+const S=[
+ {id:'s1',name:'Mùa 1',eps:rng(1,26)},
+ {id:'s2',name:'Mùa 2',eps:rng(1,39)},
+ {id:'s3',name:'Mùa 3',eps:rng(1,21)},
+ {id:'od',name:'Mùa 3 · On Deck',eps:rng(1,22)}
+];
+const L={"s1":{"1":"1los38rTlx3nQQ3isn20bzem26g3EG_0f","2":"1xlX2KW4WAWZo0Z987OLKfslh9tQ0tdvf","3":"1i2FRIjUTY80TH7ZubPUIswUAHnt5w1yg","4":"1Jtm0hnqecHwhhRl6u1d_pmFrRXHUmNCl","5":"1SRSMmCehJw9CMEiqF3QAluX6Up8he9AJ","6":"1uuTApstMcw6SVyig1gAMSl8IrF7h7L_c","7":"1mGRDrY1L4wxjNn-uGRDgBeg8t2Yx0joC","8":"1ueVdFh5efirdPCkwelMTp33YS8v1Juej","9":"158G4ZM85-L5KAVDrcFxiSDnHwIWxsFUI","10":"1uctCGM1H3oAJTCFvbho0VIFUWUjz1ixP","11":"1nGZZHj5_8f62vJv6Ykqv9UvaKidC4l_V","12":"1Cqg94ubk7AozGkmDbIufq-NBwsSa9iuN","13":"1cHzNgxttuCFQjeMbM8xiVRDokZ3v8xD2","14":"1CP7X2U9p2cRI8msdH7W8OpXPO5u0Jt5E","15":"1P8k5wX958TT2fHWPapUQGnN1xxy9J9aG","16":"1bcawSnWHbezDDoyQuurzhtOV_z8B0eek","17":"18JoaoLm3cVwxrB5CpU3UpeJ_ohXOm7yY","18":"1BVm06mk6ob1Dku5RODdMFVV_FwiNrMPN","19":"1mAC8H_0FwhkIyO2e3pc_z89r6qf1PGFD","20":"1FHE5hPFRd7proKLRfHaPR-s-sBou-Ufw","21":"1xO8u82KCpW4-UC97IJ9nX21Y4fk9S5Iu","22":"1n7LLcEixuA-L-kM3vbBc4tOm8Knlveyp","23":"1KcrbgIkl6JdDvsjf0ofUvT4n5eoqFt8P","24":"1uLgWA_lB7Oajw_RiDiTp10nm449qyARH","25":"12J2Qo2ScE9NN7VGE_ccvHvjg7rm0rmno","26":"1c4VEbQQqXQWoHQGq_YHaC17yJomM3tug"},"s2":{"1":"1rdNaYWBTGMPJT4iY04A0Lp9eObu_MSNq","2":"1VppE6z9nzzRNw2N9jA3ubxLJsQzVBmmi","3":"12vgMjq_b7lSMnbxzUYmgHuE6WZKcWkh-","4":"1vVfohR70-IFnk7WGRjU_RtKTfDIuaBdE","5":"12fj3LOOzSD2VMXZ3y0nG9eDHwJQkHx-3","7":"16cxbbq950-32yB2tpp43Jq0KwxEmqz3U","8":"1KBD_RKeAV6RFfPYwB8fGX55VDEeJukhR","9":"1ykBn79mZXcznzc6PO4JcHp_V7md-YEug","10":"1tk3wd7a7zhUnwQtXRcPa8Hc7xbMsvMGJ","11":"1DBGPTO5jAtIeE0j1zsK9cehaCaxJYCnd","12":"1K3evedGVJYDZ5Qjjy-i7tWh7I2MNPEik","13":"1iVrjC-89OzyppRLpZeYyp4EdYHF_FU5B","14":"1Pyphv3LaDd8wO79rspd4_3Qmzp86HBGd","15":"1CNWs7Yv_IQ43nKNC_T9ijEBg8uoqbpDd","16":"1mC8dWkM45AG0S3s8n-ImCRoWgvccpH1n","17":"1skLDu3k8_tf0dtdGyH2HwwUOnZI5mmcH","18":"1BoPa4DBDN0LM-dbQKq9Ihqs4qaOO3Ij2","19":"1av_3_x8YzD6spzKKG8GMt87HBdHKTIfA","20":"16dP2iTJ1C12u8RDn5QMuMhtFTotTm7OV","21":"1qu0Y9cni8P-vZUKJHIIKrYjj8YK9-mId","22":"1xnFkZ68yBpVAT_bRX_PlJr4K8RiG1mlB","23":"10D-KQhtuX-mzxkxX0iXoyT3LSaB4Y43t","24":"1xi66wUAmqRv-N7W7ueW3nA3puJHpOoLX","25":"1azWCTzWDb8AEkDWg_NGa6K1u8KW57YvH","26":"1UYzj4ligApqz8hdhnD2P5S_HyTVh4Pon","27":"19Id_2froAkvb6tETVWRSMrOTBGUySPKw","28":"11hl2nljd7h--mREAC40_duJ95gc6t5Ww","29":"1SeWcYynGq0UTCdkgpsQqNpNPrBKmoU5x","30":"1l39oFPby3GVnoBPAgOa-sa6vDdrNHkwc","31":"1dBrPpI5wHdpvrIzHyZyX7bBK8RpyxX0R","32":"1v_Cg7ySA53nIKh8nDSnUYRjMI1NmuYJF","33":"1UsOODQUfxiYNpLrjQ7f5p3vk3K8DUSwa","34":"1dlT85rP8Ehiyf34hsptNsTNsMZb1AFWO","35":"12srkcNCe3vk1ORsMhy49c6VENkqoyxry","36":"1SJDUc2w91xuUw3ulpHDQz52Qtz8Y2cGQ","37":"1BZHrAxKGufcldBhsLToC4dehTADavCxi","38":"1BGLGFRVHuM4yz4wRXCW_dpj2Wzvc38oR","39":"19pafS84pvTjAxoM02maEuaGLOMZJDRME"},"s3":{"1":"10EMRneSB6TCS3IxNTmIz7uA3mMpImCmb","2":"1s4B6nwWRip2bCJjlUb7aN3EWVsWhQtuR","3":"1yFGycn7MAVGY6EezBv0oUke28oXE48xf","4":"1rnn2dKY3CMFC6uZOd0wI5kDZGXADBbqD","5":"10HTTw4amttC8iq-YMLJbu8knlH-B9jaS","6":"1BWjTrd4qQ2MHK6LWrHB9-QDumRc3qLuc","7":"1jLoYhGMJKWAeu-BBwP1wDYOraj5mHBk-","8":"1jhfBPGY_NJiErt6lRLw_xqSeLRyab4rH","9":"1fYs6XGUOoSD9T7w-cABQdfG9-GxC2d1W","10":"1bp4Z1lKFHUqg4GWETFkOXWm0P_O-mLmn","11":"1qS58FmX6ik7HiWL5Wjx0YHYxy8G70oYB","12":"1exQp6xQ2a4TkpmR2-0P6AQb8iKQ64e3z","13":"1v3ODB_aviWvbdtp4u2DI144pJ8mxb2Qi","14":"1pTkSVSPfOOehJ80MYOtmZvfdTAht9RTL","15":"1fh_xyZm4n-JQylFgsyRfZikRG38Y29hT","16":"1lGun07DQV2nWKg5C7i597IMEkLJEZ_65","17":"1mhp6GpTcVYwZbzLUJLnmoqMXozcAazA0","18":"1YG5tfsKv6nahaWb_odYzn_ovHiD4DAbv","19":"1k7ryQm7mF9hDkvywHjCm3OwIH66n3jyp","20":"1Cuve5MMKu12Nb0AGCl8FjFuwKvySJUU8","21":"1xS_h4lwg4qJC95cJ_RAKoqYCCkk0Oyrn"},"od":{"1":"1RJw9zPQW1QatFOdRkTXjD_3FZ9iAQDy0","2":"1RToDujz7d7mkLEEmDzyIxgok6_4JBvtx","3":"1_AmXiFwj562Znovf-MnSFW1opCw18C9Q","4":"1vLMf3h-NSNPRzthr10kuQqAbMedT3Q4A","5":"13HMhMLz5st_4wmZZKpt88jXnHZGsoL0V","6":"1aU6yPeNNMUFF06uhVC0rGE0pfvwtbgJt","7":"1qyrsyJ9geEMIfHayu3-qIG0EYpE0FqG4","8":"15wkuDLNm32Uk0oo3dHa9g_hN-R_3fPjM","9":"1FG49jC7_njAhf2uZcQM713aC6Pi_OE2-","10":"1zrb6wGU26mLas7iak33J_YM_ZFJ72OfZ","18":"145WjpN8dRou2UpZ5GRa4lR7BQoZT4ceb","19":"1AX6bL8kGuyxXN7_YG4oWdUNQVXPo0zCj","20":"1MEnFWLKB7CrlisyI-WPcrdSV5UCBl41I","21":"1joCpGj5i4ZYRCn-vGy3i1uLAD8C3JNCx","22":"1cf3vjhTw5H89N7L9wEKu2QHbhqkfHhJO"}};
+const gl=(s,e)=>{const v=L[s]&&L[s][e];if(!v)return'';return v.startsWith('f:')?'https://drive.google.com/drive/folders/'+v.slice(2):'https://drive.google.com/file/d/'+v+'/view'};
+const KEY='suite-life-tracker-v1';
+let st={w:{},l:{},last:null};
+try{const r=localStorage.getItem(KEY);if(r)st=Object.assign(st,JSON.parse(r))}catch(e){}
+let cur=S[0].id,flt='all',editing=null,armed=false;
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+const $=id=>document.getElementById(id);
+const k=(s,e)=>s+'-'+e;
+const done=(s,e)=>!!st.w[k(s,e)];
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const cnt=s=>s.eps.filter(e=>done(s.id,e)).length;
+function next(){for(const s of S)for(const e of s.eps)if(!done(s.id,e))return[s,e];return null}
+function toggle(s,e){const x=k(s,e);if(st.w[x])delete st.w[x];else{st.w[x]=1;st.last=x}save();render()}
+function upTo(sid,e){const s=S.find(z=>z.id===sid);s.eps.filter(n=>n<=e).forEach(n=>st.w[k(sid,n)]=1);st.last=k(sid,e);save();render()}
+const embedUrl=u=>{const m=(u||'').match(/drive\.google\.com\/file\/d\/([\w-]+)/);return m?'https://drive.google.com/file/d/'+m[1]+'/preview':''};
+const linkOf=(s,e)=>st.l[k(s,e)]||gl(s,e);
+const flat=()=>S.flatMap(s=>s.eps.map(e=>[s.id,e]));
+let pc=null;
+function openPlayer(sid,e){
+  pc=[sid,e];const u=linkOf(sid,e);
+  $('plf').src=embedUrl(u);$('plo').href=u;
+  $('plt').textContent=S.find(z=>z.id===sid).name+' · Tập '+e;
+  if(st.auto!==false&&!done(sid,e)){st.w[k(sid,e)]=1;st.last=k(sid,e);save()}
+  $('plw').textContent=done(sid,e)?'✓ Đã xem':'Đánh dấu đã xem';
+  $('pl').hidden=false;document.body.style.overflow='hidden';
+}
+function closePlayer(){$('pl').hidden=true;$('plf').src='about:blank';document.body.style.overflow='';pc=null;render()}
+function stepPlayer(d){const f=flat();let i=f.findIndex(x=>x[0]===pc[0]&&x[1]===pc[1]);
+  for(i+=d;i>=0&&i<f.length;i+=d){if(embedUrl(linkOf(f[i][0],f[i][1]))){cur=f[i][0];openPlayer(f[i][0],f[i][1]);return}}}
+$('plx').onclick=closePlayer;$('plp').onclick=()=>stepPlayer(-1);$('pln').onclick=()=>stepPlayer(1);
+$('plw').onclick=()=>{const x=k(pc[0],pc[1]);if(st.w[x])delete st.w[x];else st.w[x]=1;save();$('plw').textContent=st.w[x]?'✓ Đã xem':'Đánh dấu đã xem'};
+document.addEventListener('keydown',ev=>{if(ev.key==='Escape'&&pc)closePlayer()});
+function render(){
+  const tot=S.reduce((a,s)=>a+s.eps.length,0),dn=S.reduce((a,s)=>a+cnt(s),0);
+  $('gbar').style.width=(tot?dn/tot*100:0)+'%';
+  $('gtxt').textContent='Đã xem '+dn+'/'+tot+' tập ('+Math.round(dn/tot*100)+'%)';
+  const n=next();
+  const nk=n?k(n[0].id,n[1]):'',nl=n?(st.l[nk]||gl(n[0].id,n[1])):'',lb=n?'▶ Tiếp tục: '+n[0].name+' · Tập '+n[1]:'🎉 Đã xem hết!';
+  ['cont','dock'].forEach(id=>{const a=$(id);a.textContent=lb;if(id==='dock')a.style.display=n?'':'none';if(nl)a.href=nl;else a.removeAttribute('href');
+    a.onclick=ev=>{if(!n)return;if(nl){if(embedUrl(nl)){ev.preventDefault();openPlayer(n[0].id,n[1])}else if(st.auto!==false){st.w[nk]=1;st.last=nk;save();setTimeout(render,50)}}else{ev.preventDefault();cur=n[0].id;flt='all';render();const el=document.getElementById('ep-'+nk);if(el)el.scrollIntoView({behavior:'smooth',block:'center'})}}});
+  $('auto').checked=st.auto!==false;$('auto').onchange=()=>{st.auto=$('auto').checked;save()};
+  
+  $('tabs').innerHTML=S.map(s=>'<button class="tab'+(s.id===cur?' on':'')+'" data-s="'+s.id+'">'+s.name+'<small>'+cnt(s)+'/'+s.eps.length+'</small></button>').join('');
+  document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{cur=b.dataset.s;editing=null;render()});
+  document.querySelectorAll('.chip').forEach(b=>{b.classList.toggle('on',b.dataset.f===flt);b.onclick=()=>{flt=b.dataset.f;render()}});
+  const s=S.find(z=>z.id===cur),all=cnt(s)===s.eps.length;
+  $('stxt').textContent=cnt(s)+'/'+s.eps.length+' tập';
+  $('allbtn').textContent=all?'Bỏ đánh dấu cả mùa':'Đánh dấu cả mùa';
+  $('allbtn').onclick=()=>{s.eps.forEach(e=>{if(all)delete st.w[k(s.id,e)];else st.w[k(s.id,e)]=1});save();render()};
+  $('reset').textContent=armed?'Bấm lại để xác nhận':'Xoá tiến độ';
+  $('reset').onclick=()=>{if(!armed){armed=true;render();setTimeout(()=>{armed=false;render()},3000);return}st.w={};st.last=null;armed=false;save();render()};
+  const list=s.eps.filter(e=>flt==='all'||(flt==='done'?done(s.id,e):!done(s.id,e)));
+  $('grid').innerHTML=list.length?list.map(e=>{
+    const x=k(s.id,e),d=done(s.id,e),l=st.l[x]||gl(s.id,e);
+    return '<div class="ep'+(d?' done':'')+'" id="ep-'+x+'"><div class="top"><span class="num">'+String(e).padStart(2,'0')+'</span><span class="st">'+(d?'✓ Đã xem':'Chưa xem')+'</span></div>'+
+    '<div class="acts"><button data-a="t" data-e="'+e+'">'+(d?'Bỏ xem':'Đã xem')+'</button>'+
+    (l?'<a class="btn watch" data-w="'+e+'" href="'+esc(l)+'" target="_blank" rel="noopener">▶ Xem</a>':'<span class="st">Chưa có link</span>')+
+    '<button data-a="l" data-e="'+e+'" aria-label="Sửa link">🔗</button>'+
+    '<button data-a="u" data-e="'+e+'" title="Đánh dấu đã xem từ đầu đến tập này">⏮</button></div>'+
+    (editing===x?'<div class="ed"><input id="inp" placeholder="Link tuỳ chỉnh (để trống = dùng link gốc)" value="'+esc(st.l[x]||'')+'"><button data-a="s" data-e="'+e+'">Lưu</button></div>':'')+'</div>'}).join('')
+    :'<div class="empty">Không có tập nào trong mục này.</div>';
+  document.querySelectorAll('#grid a.watch').forEach(a=>a.onclick=ev=>{const e=+a.dataset.w;if(embedUrl(linkOf(s.id,e))){ev.preventDefault();openPlayer(s.id,e)}else if(st.auto!==false&&!done(s.id,e)){st.w[k(s.id,e)]=1;st.last=k(s.id,e);save();setTimeout(render,50)}});
+  document.querySelectorAll('#grid button').forEach(b=>b.onclick=()=>{
+    const e=+b.dataset.e,x=k(s.id,e),a=b.dataset.a;
+    if(a==='t')toggle(s.id,e);
+    else if(a==='u')upTo(s.id,e);
+    else if(a==='l'){editing=editing===x?null:x;render();const i=$('inp');if(i)i.focus()}
+    else if(a==='s'){const v=$('inp').value.trim();if(v)st.l[x]=v;else delete st.l[x];editing=null;save();render()}
+  });
+}
+render();
+</script>
+</body>
+</html>
